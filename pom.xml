@@ -3,6 +3,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
         <!-- Build Trigger Poll SCM Test -->
+
+	<!-- Build Trigger GitHub Webhook -->
 	
 	<groupId>com.mt</groupId>
 	<artifactId>maven-web-application</artifactId>
