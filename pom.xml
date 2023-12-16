@@ -4,7 +4,7 @@
 
         <!-- Build Trigger Poll SCM Test -->
 
-	<!-- Build Trigger GitHub Webhook -->
+	<!-- Build Trigger GitHub-Webhook -->
 	
 	<groupId>com.mt</groupId>
 	<artifactId>maven-web-application</artifactId>
