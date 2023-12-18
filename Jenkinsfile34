@@ -17,7 +17,7 @@ node{
   }
   stage('5.deploy2UAT'){
     //use deploy to container plugin (Pipeline Syntax)
-    deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://3.87.135.84:8088/')], contextPath: null, war: 'target/*war'
+    deploy adapters: [tomcat9(credentialsId: 'tomcat-cred', path: '', url: 'http://3.87.135.84:8088/')], contextPath: null, war: 'target/*war'
  }
   stage('6.ManualApproval'){
     sh " echo 'Please review & approve' "
@@ -28,7 +28,7 @@ node{
   }
   stage('7.deploy2prod'){
     //use deploy to container plugin
-    deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://3.87.135.84:8088/')], contextPath: null, war: 'target/*war'    
+    deploy adapters: [tomcat9(credentialsId: 'tomcat-cred', path: '', url: 'http://3.87.135.84:8088/')], contextPath: null, war: 'target/*war'    
   }
 
   stage('8.aplicationPerformanceMonitoring'){
