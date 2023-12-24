@@ -1,0 +1,73 @@
+pipeline{
+    agent any
+    tools{
+        maven 'maven3.9.6'
+    }
+    stages{
+        stage('1.CloneCode'){
+            steps{
+                git "https://github.com/fvder/maven-web-application.git"
+            }
+        }
+        stage('2.Build'){
+            steps{
+                sh "mvn clean package"
+            }
+        }
+        stage('3.CodeQuality'){
+            steps{
+                sh "mvn sonar:sonar"
+            }
+        }
+        stage('4.UploadArtifacts'){
+            steps{
+                sh "mvn deploy"
+            }
+        }
+        stage('5.Deploy2UAT'){
+            steps{
+                deploy adapters: [tomcat9(credentialsId: 'tomcat-cred', path: '', url: 'http://172.31.32.224:8088/')], contextPath: null, war: 'target/*war'
+            }
+        }
+        stage('6.ManualApproval'){
+            steps{
+                timeout(time: 4, unit: 'HOURS') {
+                input message: 'Please review and approve within 5 hours'
+                }
+            }
+        }
+        stage('7.Deploy2Prod'){
+            steps{
+                deploy adapters: [tomcat9(credentialsId: 'tomcat-cred', path: '', url: 'http://172.31.32.224:8088/')], contextPath: null, war: 'target/*war'
+            }
+        }
+        stage('8.AppPerformanceMonitoring'){
+            steps{
+                sh "echo 'Monitoring with Prometheus'"
+            }
+        }
+    }
+    post{
+        always{
+            emailext body: '''FYA.
+
+Regards,
+
+Joseph''', recipientProviders: [buildUser(), contributor(), developers(), upstreamDevelopers()], subject: 'BUILD STATUS', to: 'aeternityprestige@gmail.com'
+        }
+        success{
+            emailext body: '''FYA.
+
+Regards,
+
+Joseph''', recipientProviders: [buildUser(), contributor(), developers(), upstreamDevelopers()], subject: 'BUILD SUCCEEDED', to: 'aeternityprestige@gmail.com'
+        }
+        failure{
+            emailext body: '''FYA.
+
+Regards,
+
+Joseph''', recipientProviders: [buildUser(), contributor(), developers(), upstreamDevelopers()], subject: 'BUILD FAILED', to: 'aeternityprestige@gmail.com'
+        }
+    }
+}
