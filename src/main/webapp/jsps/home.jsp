@@ -14,7 +14,7 @@
 Alaye mi ba mi soro kan, ki lo n lo (ki lo n lo)
 For my area oro mi lon so (lon so o)
 Won ni mo give them pressure, pressure
-O je maa ko sun, sise lo
+O je maa ko sun, sise loo
 Omo iya, pawo lo
 Nobody go dey, sapa don too much
 Eni to ba ba s'ohun sa lo mo
