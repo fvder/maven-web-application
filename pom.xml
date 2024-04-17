@@ -144,6 +144,16 @@
 					<wtpContextName>maven-web-application</wtpContextName>
 				</configuration>
 			</plugin>
+
+			    <plugin>
+      <groupId>io.snyk</groupId>
+      <artifactId>snyk-maven-plugin</artifactId>
+      <version>2.2.0</version>
+      <inherited>false</inherited>
+      <configuration>
+        <apiToken>${env.SNYK_TOKEN}</apiToken>
+      </configuration>
+    </plugin>
 			
 </plugins>
 	</build>
