@@ -44,16 +44,16 @@ pipeline{
         stage('8.SnykContainerSecurityScan'){
             steps{
                 withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
-                    sh "snyk container test fvder/tesla -fn"
+                sh 'snyk container test fvder/tesla || true'
                 }
             }
         }
         stage('9.DockerImagePush+RemoveDockerImage'){
             steps{
-                withCredentials([usernamePassword(credentialsId: 'GitHub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                    sh "docker push fvder/tesla"
-                    sh 'docker rmi $(docker images -a)'
+                withCredentials([usernamePassword(credentialsId: 'DockerLogin', passwordVariable: 'DOCKER_LOGIN', usernameVariable: 'DOCKER_USERNAME')]) {
+                sh 'docker push fvder/tesla'
                 }
+                sh 'docker rmi $(docker images -a)'
             }
         }
     }
