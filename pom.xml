@@ -24,8 +24,8 @@
 		<spring.version>5.1.2.RELEASE</spring.version>
 		<junit.version>4.11</junit.version>
 		<log4j.version>1.2.17</log4j.version>
-		<sonar.host.url>http://172.31.90.235:9000/</sonar.host.url> 
-		<sonar.login>squ_ba70265a5bc71e48bd8d2b5cacb229e097eacbf2</sonar.login>
+		<sonar.host.url>http://10.0.119.63:9000/</sonar.host.url> 
+		<sonar.login>squ_6064b22c9e2ec4cb4c34a0c0f88ba674ceedab6d</sonar.login>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
@@ -92,17 +92,18 @@
 			<scope>provided</scope>
 		</dependency>	
 	</dependencies>	
+	
 	<distributionManagement>
 	    <repository>
 	      <id>nexus</id>
-	      <name>Landmark Technologies Releases Nexus Repository</name>
-	      <url>http://172.31.83.211:8081/repository/tesla-releases/</url>
+	      <name>Aeternity Presitige Releases Nexus Repository</name>
+	      <url>http://107.23.31.159:8081/repository/easy-buggy-releases/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
 	      <id>nexus</id>
-	      <name>Landmark Technologies Snapshot Nexus Repository </name>
-	      <url>http://172.31.83.211:8081/repository/tesla-snapshots/</url>
+	      <name>Aeternity Presitige Snapshot Nexus Repository</name>
+	      <url>http://107.23.31.159:8081/repository/easy-buggy-snapshots/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
