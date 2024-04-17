@@ -53,7 +53,7 @@ pipeline{
                 withCredentials([usernamePassword(credentialsId: 'DockerLogin', passwordVariable: 'DOCKER_LOGIN', usernameVariable: 'DOCKER_USERNAME')]) {
                 sh 'docker push fvder/tesla'
                 }
-                sh 'docker rmi $(docker images -a)'
+                sh 'docker rmi $(docker images -aq)'
             }
         }
     }
