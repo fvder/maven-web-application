@@ -11,7 +11,7 @@ pipeline{
         }
         stage('2.CheckovIACscan'){
             steps{
-                sh "checkov -s -f ./Dockerfile -f"
+                sh "checkov -s -f ./Dockerfile"
             }
         }
         stage('3.Build'){
@@ -34,6 +34,26 @@ pipeline{
         stage('6.NexusUpload'){
             steps{
                 sh "mvn deploy"
+            }
+        }
+        stage('7.DockerImageBuild'){
+            steps{
+                sh "docker build -t fvder/tesla ."
+            }
+        }
+        stage('8.SnykContainerSecurityScan'){
+            steps{
+                withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
+                    sh "snyk container test fvder/tesla -fn"
+                }
+            }
+        }
+        stage('9.DockerImagePush+RemoveDockerImage'){
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'GitHub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                    sh "docker push fvder/tesla"
+                    sh 'docker rmi $(docker images -a)'
+                }
             }
         }
     }
