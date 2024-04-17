@@ -1,0 +1,40 @@
+pipeline{
+    agent any
+    tools{
+        maven 'maven3.9.6'
+    }
+    stages{
+        stage('1.GitHubCodeCheckout'){
+            steps{
+                git "https://github.com/fvder/maven-web-application.git"
+            }
+        }
+        stage('2.CheckovIACscan'){
+            steps{
+                sh "checkov -s -f ./Dockerfile -f"
+            }
+        }
+        stage('3.Build'){
+            steps{
+                sh "mvn clean package"
+            }
+        }
+        stage('4.SonarQubeSAST/SCQA'){
+            steps{
+                sh "mvn sonar:sonar"
+            }
+        }
+        stage('5.SnykSCA'){
+            steps{
+                withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
+                    sh "mvn snyk:test -fn"
+                }
+            }
+        }
+        stage('6.NexusUpload'){
+            steps{
+                sh "mvn deploy"
+            }
+        }
+    }
+}
